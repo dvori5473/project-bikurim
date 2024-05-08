@@ -5,11 +5,8 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
-import { FileUpload } from 'primereact/fileupload';
-import { Rating } from 'primereact/rating';
 import { Toolbar } from 'primereact/toolbar';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton } from 'primereact/radiobutton';
 import { InputNumber } from 'primereact/inputnumber';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
@@ -17,6 +14,7 @@ import { Tag } from 'primereact/tag';
 import { useAddProductMutation, useDeleteProductItemMutation, useGetProductsQuery, useUpdateProductMutation } from './productApiSlice';
 import { useSearchParams } from 'react-router-dom';
 import Search from '../../components/Search';
+import IsLoading from '../../components/IsLoading';
 
 
 
@@ -35,8 +33,8 @@ export default function AdminProducts() {
 
     const [products, setProducts] = useState(null);
     const [productDialog, setProductDialog] = useState(false);
-    const [isUpdate,setIsupdate]=useState(false)
-    const [isAdd,setIsAdd]=useState(false)
+    const [isUpdate, setIsupdate] = useState(false)
+    const [isAdd, setIsAdd] = useState(false)
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);
     const [product, setProduct] = useState(emptyProduct);
     const [selectedProducts, setSelectedProducts] = useState(null);
@@ -45,42 +43,38 @@ export default function AdminProducts() {
     const [selectedFile, setSelectedFile] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
-    
-    const [searchParams]=useSearchParams()
+    const [searchParams] = useSearchParams()
+    const search = searchParams.get("search")
+    const [addProduct, { isSuccess: is, data: addProductData }] = useAddProductMutation()
+    const [updateProduct, { isSuccess: updateInSuccess, data: updateProductData }] = useUpdateProductMutation()
+    const [deleteProductItem, { isSuccess: deletInSuccess }] = useDeleteProductItemMutation()
+    const { data, isSuccess,isLoading } = useGetProductsQuery()
 
-    const search=searchParams.get("search")
-    const [addProduct ,{ isSuccess:is,data:addProductData }] = useAddProductMutation()
-    const [updateProduct,{ isSuccess:updateInSuccess,data:updateProductData }] = useUpdateProductMutation()
-    const [deleteProductItem,{ isSuccess:deletInSuccess,data:deletProductData }] = useDeleteProductItemMutation()
-
-    const { data, isSuccess, isError, error } = useGetProductsQuery()
-  
     useEffect(() => {
-       if(isSuccess){
-        const filterData=!search? data:data.filter(p=>(p.name.indexOf(search)>-1)||(p.description.indexOf(search)>-1))
-        setProducts(filterData)
-       }
+        if (isSuccess) {
+            const filterData = !search ? data : data.filter(p => (p.name.indexOf(search) > -1) || (p.description.indexOf(search) > -1))
+            setProducts(filterData)
+        }
     }, [isSuccess]);
     useEffect(() => {
-         const filterData=!search? data:data.filter(p=>(p.name.indexOf(search)>-1)||(p.description.indexOf(search)>-1))
-         setProducts(filterData)
-     }, [search]);
+        const filterData = !search ? data : data.filter(p => (p.name.indexOf(search) > -1) || (p.description.indexOf(search) > -1))
+        setProducts(filterData)
+    }, [search]);
 
     useEffect(() => {
-        if(is){
+        if (is) {
             let _products = [...products];
             _products.push(addProductData)
             setProducts(_products);
             setProduct(emptyProduct);
             setIsAdd(false)
         }
-     }, [is]);
+    }, [is]);
 
-     useEffect(() => {
-        if(updateInSuccess){
-            let _products =products.map(p=>{
-                if(p._id===updateProductData._id)
-                {
+    useEffect(() => {
+        if (updateInSuccess) {
+            let _products = products.map(p => {
+                if (p._id === updateProductData._id) {
                     return updateProductData
                 }
                 return p
@@ -89,16 +83,17 @@ export default function AdminProducts() {
             setProduct(emptyProduct);
             setIsupdate(false)
         }
-     }, [updateInSuccess]);
+    }, [updateInSuccess]);
 
-     useEffect(() => {
-        if(deletInSuccess){
+    useEffect(() => {
+        if (deletInSuccess) {
             let _products = products.filter((val) => val._id !== product._id);
-
             setProducts(_products);
             setProduct(emptyProduct);
         }
-     }, [deletInSuccess]);
+    }, [deletInSuccess]);
+    
+    if(isLoading)return <IsLoading/>
 
     const formatCurrency = (value) => {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'ILS' });
@@ -120,52 +115,52 @@ export default function AdminProducts() {
         setDeleteProductDialog(false);
     };
     const handleFileChange = (event) => {
-        let a=[]
+        let a = []
         for (let index = 0; index < event.target.files.length; index++) {
             a.push(event.target.files[index])
-            
+
         }
         setSelectedFile(a);
-      };
+    };
 
     const saveProduct = () => {
-        
-       if(isAdd){
-        setSubmitted(true);
-        if (product.name.trim()&&product.price && selectedFile) {
-            const formData = new FormData();
-            formData.append('name', product.name);
-            formData.append('price',product.price);
-            formData.append('description', product.description);
-            formData.append('quantity', product.quantity);
-            selectedFile?.forEach(element => {
-                formData.append('imageURL',element)
-            });
-            addProduct(formData)
-            setProductDialog(false); 
-            setSelectedFile(null)  
- 
-           
-        }}
-        if(isUpdate){
+
+        if (isAdd) {
             setSubmitted(true);
-            if (product.name.trim()&&product.price && selectedFile) {
+            if (product.name.trim() && product.price && selectedFile) {
                 const formData = new FormData();
-                formData.append('_id', product._id);
                 formData.append('name', product.name);
-                formData.append('price',product.price);
+                formData.append('price', product.price);
                 formData.append('description', product.description);
                 formData.append('quantity', product.quantity);
                 selectedFile?.forEach(element => {
-                    formData.append('imageURL',element)
+                    formData.append('imageURL', element)
                 });
-               updateProduct(formData)
-               setProductDialog(false);
-               setSelectedFile(null) 
-              
-           }}
+                addProduct(formData)
+                setProductDialog(false);
+                setSelectedFile(null)
+            }
         }
-    
+
+        if (isUpdate) {
+            setSubmitted(true);
+            if (product.name.trim() && product.price) {
+                const formData = new FormData();
+                formData.append('_id', product._id);
+                formData.append('name', product.name);
+                formData.append('price', product.price);
+                formData.append('description', product.description);
+                formData.append('quantity', product.quantity);
+                selectedFile?.forEach(element => {
+                    formData.append('imageURL', element)
+                });
+                updateProduct(formData)
+                setProductDialog(false);
+                setSelectedFile(null)
+            }
+        }
+    }
+
 
     const editProduct = (product) => {
         setIsupdate(true)
@@ -179,7 +174,7 @@ export default function AdminProducts() {
     };
 
     const deleteProduct = () => {
-        deleteProductItem({_id:product._id})
+        deleteProductItem({ _id: product._id })
         setDeleteProductDialog(false);
         toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
     };
@@ -211,7 +206,6 @@ export default function AdminProducts() {
         return (
             <div className="flex flex-wrap gap-2">
                 <Button label="New" icon="pi pi-plus" severity="success" onClick={openNew} />
-                {/* <Button label="Delete" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} /> */}
             </div>
         );
     };
@@ -221,8 +215,8 @@ export default function AdminProducts() {
     };
 
     const imageBodyTemplate = (rowData) => {
-        if(rowData.imageURL)
-        return <img src={"http://localhost:1234/uploads/"+rowData.imageURL[0].split("\\")[2]} alt={rowData.imageURL} className="shadow-2 border-round" style={{ width: '64px' }} />;
+        if (rowData.imageURL)
+            return <img src={"http://localhost:1234/uploads/" + rowData.imageURL[0].split("\\")[2]} alt={rowData.imageURL} className="shadow-2 border-round" style={{ width: '64px' }} />;
     };
 
 
@@ -268,7 +262,7 @@ export default function AdminProducts() {
             <h4 className="m-0">Manage Products</h4>
             <span className="p-input-icon-left">
                 <i className="pi pi-search" />
-                <Search/>
+                <Search />
             </span>
         </div>
     );
@@ -287,75 +281,75 @@ export default function AdminProducts() {
 
 
     return (
-        <div>
-            <Toast ref={toast} />
-            <div className="card">
-                <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+        <>
+            <br></br>
+            <div className="card" style={{ marginTop: "100px" }}>
+                <Toast ref={toast} />
+                <div className="card">
+                    <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
-                <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
-                        dataKey="id"  paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
+                    <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
+                        dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
-                    <Column field="name" header="Name" sortable style={{ minWidth: '10rem' }}></Column>
-                    <Column field="description" header="Description" sortable style={{ maxWidth: '12rem' }}></Column>
-                    <Column field="imageURL" header="Image" body={imageBodyTemplate}></Column>
-                    <Column field="price" header="Price" body={priceBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column>
-                    <Column field="quantity" header="quantity" sortable style={{ minWidth: '10rem' }}></Column>
-                    {/* <Column field="rating" header="Reviews" body={ratingBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column> */}
-                    <Column field="inventoryStatus" header="Status" body={statusBodyTemplate}  style={{ minWidth: '12rem' }}></Column>
-                    <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
-                    
-                </DataTable>
+                        <Column field="name" header="Name" sortable style={{ minWidth: '10rem', maxWidth: '10rem' }}></Column>
+                        <Column field="description" header="Description" sortable style={{ minWidth: '17rem', maxWidth: '17rem' }}></Column>
+                        <Column field="imageURL" header="Image" body={imageBodyTemplate}></Column>
+                        <Column field="price" header="Price" body={priceBodyTemplate} sortable style={{ minWidth: '8rem' }}></Column>
+                        <Column field="quantity" header="quantity" sortable style={{ minWidth: '10rem' }}></Column>
+                        <Column field="inventoryStatus" header="Status" body={statusBodyTemplate} style={{ minWidth: '12rem' }}></Column>
+                        <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
+
+                    </DataTable>
+                </div>
+
+                <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
+                    <div className="field">
+                        <label htmlFor="name" className="font-bold">
+                            Name
+                        </label>
+                        <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} />
+                        {submitted && !product.name && <small className="p-error">Name is required</small>}
+                    </div>
+                    <div className="field">
+                        <label htmlFor="description" className="font-bold">
+                            Description
+                        </label>
+                        <InputTextarea id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} />
+
+                    </div>
+                    <input type="file" name="imageURL" multiple onChange={handleFileChange} />
+                    {submitted && !selectedFile && isAdd && <small className="p-error">image is required</small>}
+                    <div className="formgrid grid">
+                        <div className="field col">
+                            <label htmlFor="price" className="font-bold">
+                                Price
+                            </label>
+                            <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, 'price')} required autoFocus mode="currency" currency="ILS" locale="en-US" className={classNames({ 'p-invalid': submitted && !product.price })} />
+                            {submitted && !product.price && <small className="p-error">Price is required</small>}
+                        </div>
+                        <div className="field col">
+                            <label htmlFor="quantity" className="font-bold">
+                                Quantity
+                            </label>
+                            <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} />
+                        </div>
+                    </div>
+                </Dialog>
+
+                <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
+                    <div className="confirmation-content">
+                        <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                        {product && (
+                            <span>
+                                Are you sure you want to delete <b>{product.name}</b>?
+                            </span>
+                        )}
+                    </div>
+                </Dialog>
+
+
             </div>
-
-            <Dialog visible={productDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Product Details" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-           
-                {/* {product.imageURL && <img src={'http://localhost:1234/uploads/'+product.imageURL} alt={product.imageURL} className="product-image block m-auto pb-3" />} */}
-                <div className="field">
-                    <label htmlFor="name" className="font-bold">
-                        Name
-                    </label>
-                    <InputText id="name" value={product.name} onChange={(e) => onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': submitted && !product.name })} />
-                    {submitted && !product.name && <small className="p-error">Name is required.</small>}
-                </div>
-                <div className="field">
-                    <label htmlFor="description" className="font-bold">
-                        Description
-                    </label>
-                    <InputTextarea id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} />
-                    
-                </div>
-                <input type="file" name="imageURL" multiple onChange={handleFileChange} />
-                {submitted && !selectedFile && <small className="p-error">image is required.</small>}
-                <div className="formgrid grid">
-                    <div className="field col">
-                        <label htmlFor="price" className="font-bold">
-                            Price
-                        </label>
-                        <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, 'price')}required autoFocus  mode="currency" currency="ILS" locale="en-US" className={classNames({ 'p-invalid': submitted && !product.price })}/>
-                        {submitted && !product.price && <small className="p-error">Price is required.</small>}
-                    </div>
-                    <div className="field col">
-                        <label htmlFor="quantity" className="font-bold">
-                            Quantity
-                        </label>
-                        <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} />
-                    </div>
-                </div>
-            </Dialog>
-
-            <Dialog visible={deleteProductDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
-                <div className="confirmation-content">
-                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                    {product && (
-                        <span>
-                            Are you sure you want to delete <b>{product.name}</b>?
-                        </span>
-                    )}
-                </div>
-            </Dialog>
-
-
-        </div>
+        </>
     );
 }

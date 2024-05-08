@@ -15,7 +15,7 @@ const orderSchema=new mongoose.Schema({
                 require:true
             },
             quantity:{
-                type:Number,
+                type:Number,    
                 require:true
             },
             imageURL:{

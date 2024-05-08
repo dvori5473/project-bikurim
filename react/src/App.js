@@ -22,16 +22,19 @@ import { useState } from 'react';
 
 function App() {
   const [visibleRight, setVisibleRight] = useState(false);
+  const [toCheckout, setToCheckout] = useState(false);
   return (
     <>
    <NavBar setVisibleRight={setVisibleRight} visibleRight={visibleRight}/> 
    <Routes>
    <Route path='/'element={<Home/>}></Route>
-   <Route path='/login'element={<Login/>}></Route> 
+  const[toBasket,setToBasket]=useState(false)
+  const[toBasket,setToBasket]=useState(false)
+   <Route path='/login'element={<Login setToCheckout={setToCheckout} toCheckout={toCheckout}/>}></Route> 
    <Route path='/product'element={<Products/>}></Route>
     <Route path='/register'element={<Register/>}></Route>
-    <Route path='/basket'element={<FullBasket/>}></Route> 
-   <Route path='/product/:id'element={<Product/>}></Route>
+    <Route path='/basket'element={<FullBasket setToCheckout={setToCheckout}/>}></Route> 
+   <Route path='/product/:id'element={<Product setVisibleRight={setVisibleRight}/>}></Route>
    <Route element={<RequireAuth allowRoles={["admin","user"]}/>}>
 
    <Route path='/update'element={<Update/>}></Route>

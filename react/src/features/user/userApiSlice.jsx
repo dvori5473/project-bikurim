@@ -9,21 +9,12 @@ const userApiSlice = apiSlice.injectEndpoints({
             }),
             providesTags: ["users"]
         }),
-        // deleteProductItem: build.mutation({
-        //     query: ({ id }) => ({
-        //         url: '/api/product',
-        //         method: "DELETE",
-        //         body: { id: id }
-        //     }),
-        //     invalidatesTags: ["products"]
-        // })
         updateUser: build.mutation({
             query: (user) => ({
                 url: '/api/user',
                 method: "PUT",
                 body: user
             })
-            //invalidatesTags: ["users"]
         }),
         updateBasket: build.mutation({
             query: (basket) => ({
@@ -31,7 +22,6 @@ const userApiSlice = apiSlice.injectEndpoints({
                 method: "PUT",
                 body: basket
             })
-            //invalidatesTags: ["users"]
         }),
         addDefaultAddress: build.mutation({
             query: (Address) => ({
@@ -39,7 +29,6 @@ const userApiSlice = apiSlice.injectEndpoints({
                 method: "PUT",
                 body: Address
             })
-            //invalidatesTags: ["users"]
         })
         ,
         cleaningBasket: build.mutation({
@@ -48,7 +37,6 @@ const userApiSlice = apiSlice.injectEndpoints({
                 method: "PUT",
                 body:{_id}
             })
-            //invalidatesTags: ["users"]
         })
         
     }),

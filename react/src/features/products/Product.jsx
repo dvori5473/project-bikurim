@@ -1,42 +1,32 @@
 
 import { Button } from 'primereact/button';
-import { Tag } from 'primereact/tag';
 import React, { useEffect, useState } from "react";
 import { InputNumber } from 'primereact/inputnumber';
 import { useAddProductItemMutation } from '../basket/basketApiSlice';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../auth/authSlice';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useLoginMutation } from '../auth/authApiSlice';
+import {  useParams } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import { useGetProductbyIdQuery } from './productApiSlice';
 import { Galleria } from 'primereact/galleria';
 import { Divider } from 'primereact/divider';
-//import { PhotoService } from './service/PhotoService';
+import IsLoading from '../../components/IsLoading';
 
-
-
-const Product = () => {
-    // const product = JSON.parse(localStorage.getItem("Product"))
+const Product = ({ setVisibleRight }) => {
     const { id } = useParams()
-    console.log(id);
-    const navigate = useNavigate()
     const dispatch = useDispatch()
     const user = useAuth()
     const [value, setValue] = useState(1);
     const [addProduct, { isSuccess, data }] = useAddProductItemMutation()
-    const { data: product, isLoading, isSuccess: is, isError, error } = useGetProductbyIdQuery(id)
-
+    const { data: product, isLoading } = useGetProductbyIdQuery(id)
 
     useEffect(() => {
         if (isSuccess) {
             dispatch(setToken(data))
-            navigate('/basket')
+            setVisibleRight(true)
         }
     }, [isSuccess])
-    if (isLoading) {
-        return <h1>isLoading</h1>
-    }
+    if (isLoading) return <IsLoading/>
 
     const responsiveOptions = [
         {
@@ -53,18 +43,14 @@ const Product = () => {
         }
     ];
 
-    // useEffect(() => {
-
-    //         // PhotoService.getImages().then(data => setImages(data));
-    // }, []);
 
     const itemTemplate = (item) => {
 
-        return <img src={"http://localhost:1234/uploads/" + item.split("\\")[2]} alt={item.alt} style={{ width: '100%', height: '500px', display: 'block' }} />;
+        return <img src={"http://localhost:1234/uploads/" + item.split("\\")[2]} alt={item.alt} style={{ width: '100%', maxHeight: '420px' }} />;
     }
 
     const thumbnailTemplate = (item) => {
-        return <img src={"http://localhost:1234/uploads/" + item.split("\\")[2]} alt={item.alt} style={{ width: '50px', display: 'block' }} />;
+        return <img src={"http://localhost:1234/uploads/" + item.split("\\")[2]} alt={item.alt} style={{ width: '50px' }} />;
     }
     const addProductToBasket = () => {
         if (localStorage.getItem("token")) {
@@ -97,27 +83,27 @@ const Product = () => {
                         payment: product.price * value
                     }))
             }
-            navigate('/basket')
+            setVisibleRight(true)
         }
     }
 
     return (
         <>
-
-            <div className="flex flex-column md:flex-row" style={{direction:'rtl'}}>   
-                <div className=" flex-column md:flex-row"style={{minWidth:"300px",maxWidth:"500"}}>
-                <h1><b>{product.name}</b></h1><br></br>
-                <h2><b>₪{product.price}</b></h2><br></br>
-                <h2><b>{product.description}</b></h2><br></br>
-                <div className="flex-auto">
-                    <InputNumber inputId="minmax-buttons" value={value} onValueChange={(e) => setValue(e.value)} mode="decimal" showButtons min={0} max={100} />
-                </div><br></br>
-                <Button icon="pi pi-shopping-cart" className="p-button-rounded" onClick={addProductToBasket} disabled={product.quantity===0}></Button><br></br><br></br>
-                </div>
-           <Divider layout="vertical" className="hidden md:flex"> </Divider>
-           <div className="flex flex-column md:flex-row"style={{minWidth:"300px",maxWidth:"500"}}>
-                <Galleria value={product.imageURL} responsiveOptions={responsiveOptions} numVisible={5} circular style={{ maxWidth: '640px' }}
-                    showItemNavigators showItemNavigatorsOnHover item={itemTemplate} thumbnail={thumbnailTemplate} />
+            <br></br>
+            <div className="" style={{ direction: 'rtl', marginTop: '150px', width: '70%', marginLeft: '5%' }}>
+                <div className="flex flex-column md:flex-row" >
+                    <div className="flex-column md:flex-row" style={{ maxWidth: '500px', minWidth: '300px' }}>
+                        <h1><b>{product.name}</b></h1>
+                        <h2><b>₪{product.price}</b></h2>
+                        <h2><b>{product.description}</b></h2>
+                        <InputNumber inputId="minmax-buttons" value={value} onValueChange={(e) => setValue(e.value)} mode="decimal" showButtons min={0} max={product.quantity} /><br></br><br></br>
+                        <Button icon="pi pi-shopping-cart" className="p-button-rounded" onClick={addProductToBasket} disabled={product.quantity === 0}></Button><br></br><br></br>
+                    </div>
+                    <Divider layout="vertical" className="hidden md:flex"> </Divider>
+                    <div className="flex flex-column md:flex-row" style={{ minWidth: "300px", maxWidth: "500" }}>
+                        <Galleria value={product.imageURL} responsiveOptions={responsiveOptions} numVisible={5} circular style={{ maxWidth: '500px' }}
+                            showItemNavigators showItemNavigatorsOnHover item={itemTemplate} thumbnail={thumbnailTemplate} />
+                    </div>
                 </div>
             </div>
         </>

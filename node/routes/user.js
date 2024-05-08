@@ -4,9 +4,7 @@ const UserControler=require("../controller/userControler")
 const veryfyJWT=require("../middleware/verifyJWT")
 const verifyAdmin=require("../middleware/verifyAdmin")
 
-//router.post("/",UserControler.creataNewUser)
-//router.delete("/",UserControler.deletUser)
-//router.get("/id",UserControler.getUserbyId)
+
 router.use(veryfyJWT)
 router.put("/",UserControler.updateUser)
 router.put("/addProduct",UserControler.addProduct)

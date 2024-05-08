@@ -2,7 +2,6 @@ import{ useSelector}from "react-redux"
 import { selectToken } from "../features/auth/authSlice"
 import { jwtDecode } from "jwt-decode"
 const useAuth=()=>{
-   //const token=localStorage.getItem("token")
    const token=useSelector(selectToken)
    let isAdmin=false
    let isUser=false

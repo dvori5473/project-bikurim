@@ -16,11 +16,7 @@ app.use(express.json())
 app.use(express.static("public"))
 app.use("/api/auth", require("./routes/authRoutes"))
 app.use("/api/user", require("./routes/user"))
-app.use("/api/article", require("./routes/article"))
-app.use("/api/commonQuestion", require("./routes/commonQuestion"))
-app.use("/api/message", require("./routes/message"))
 app.use("/api/product", require("./routes/product"))
-app.use("/api/recommendation", require("./routes/recommendation"))
 app.use("/api/order", require("./routes/order"))
 
 

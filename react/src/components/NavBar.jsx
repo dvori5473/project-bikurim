@@ -1,28 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Menubar } from 'primereact/menubar';
-import { InputText } from 'primereact/inputtext';
-import { Badge } from 'primereact/badge';
-import { Avatar } from 'primereact/avatar';
 import { Button } from 'primereact/button';
-import { Sidebar } from 'primereact/sidebar';
-
 import Basket from '../features/basket/Basket';
 import useAuth from '../hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import { removeToken } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
-export default function NavBar({visibleRight,setVisibleRight}) {
-    const { firstName, isAdmin, isUser,_id } = useAuth()
+import { Link } from 'react-router-dom';
+export default function NavBar({ visibleRight, setVisibleRight }) {
+    const { firstName, isAdmin, isUser, _id } = useAuth()
     const dispatch = useDispatch()
-    const navigate=useNavigate()
-    // const itemRenderer = (item) => (
-    //     <a className="flex align-items-center p-menuitem-link">
-    //         <span className="mx-2">{item.label}</span>
-    //         {item.badge && <Badge className="ml-auto" value={item.badge} />}
-    //         {item.shortcut && <span className="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{item.shortcut}</span>}
-    //     </a>
-    // );
-    // const [visibleRight, setVisibleRight] = useState(false);
+    const navigate = useNavigate()
 
     const useriItems = [
 
@@ -35,11 +23,7 @@ export default function NavBar({visibleRight,setVisibleRight}) {
             label: `hello ${firstName ? firstName : 'Israel'}`,
             items: [
                 {
-                    label: 'רישום/התחברות',
-                    url: '/login'
-                },
-                {
-                    label: <Button style={{ color: 'white', opacity: "100%" }} text severity='info' onClick={() => {dispatch(removeToken());navigate("/")}}>התנתקות</Button>,
+                    label: <Button style={{ color: 'white', opacity: "100%" }} text severity='info' onClick={() => { dispatch(removeToken()); navigate("/") }}>התנתקות</Button>,
 
                 },
                 {
@@ -57,8 +41,8 @@ export default function NavBar({visibleRight,setVisibleRight}) {
     const adminItems = [
         {
             label: 'משתמשים',
-            url:'/adminUsers'
-            
+            url: '/adminUsers'
+
         },
         {
             label: 'מוצרים',
@@ -68,23 +52,19 @@ export default function NavBar({visibleRight,setVisibleRight}) {
             label: `hello ${firstName ? firstName : 'Israel'}`,
             items: [
                 {
-                    label: 'רישום/התחברות',
-                    url: '/login'
-                },
-                {
-                label: <Button style={{ color: 'white', opacity: "100%" }} text severity='info' onClick={() => {navigate('/');dispatch(removeToken())}}>התנתקות</Button>,
+                    label: <Button style={{ color: 'white', opacity: "100%" }} text severity='info' onClick={() => { navigate('/'); dispatch(removeToken()) }}>התנתקות</Button>,
 
                 },
                 {
                     label: 'עריכת פרטים אישיים',
                     url: '/update',
                 },
- 
+
             ]
 
         }
     ];
-    const simpleUserItems=[
+    const simpleUserItems = [
         {
             label: 'חנות',
             url: '/product',
@@ -97,31 +77,28 @@ export default function NavBar({visibleRight,setVisibleRight}) {
                     label: 'רישום/התחברות',
                     url: '/login'
                 },
-                {
-                    label: <Button style={{ color: 'white', opacity: "100%" }} text severity='info' onClick={() => {dispatch(removeToken());navigate("/")}}>התנתקות</Button>,
-
-                },
             ]
 
         }
     ];
-    const start = <img alt="logo" src="logo.png" height="60" className="mr-2"></img>;
+    const start = <Link to={'/'} ><img alt="logo" src="logo.png" height="60" className="mr-2" style={{ paddingLeft: '15px' }}></img></Link>;
     const end = (
-        <div className="flex align-items-center gap-2">
-            <Button icon="pi pi-shopping-cart" rounded text severity='info' onClick={() => setVisibleRight(true)} ></Button>
+        <div className="flex align-items-center gap-2" style={{ paddingRight: '25px' }}>
+            <Button icon="pi pi-shopping-cart" rounded text severity="info" onClick={() => setVisibleRight(true)} style={{ color: '#C08F48' }}></Button>
+
         </div>
     );
 
-const items=isAdmin ?adminItems:isUser?useriItems:simpleUserItems
+    const items = isAdmin ? adminItems : isUser ? useriItems : simpleUserItems
 
     return (
         <>
-        <div className="card">
-           
-                <Menubar model={items} start={start} end={isAdmin?null:end} /> 
-                       
-                        <Basket  setVisibleRight={setVisibleRight} visibleRight={visibleRight}/>
-        </div>
+            <div style={{ backgroundColor: '#C08F48', opacity: '0.9', padding: '5px', position: 'fixed', width: '95%', left: '2.5%', zIndex: '100' }}>
+
+                <Menubar model={items} start={start} end={isAdmin ? null : end} />
+
+                {!isAdmin ? <Basket setVisibleRight={setVisibleRight} visibleRight={visibleRight} /> : <></>}
+            </div>
         </>
     )
 }

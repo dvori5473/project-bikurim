@@ -12,7 +12,6 @@ router.post("/",orderController.creataNewOrder)
 router.use(verifyAdmin)
 router.put("/",orderController.updateOrder)
 router.get("/",orderController.getAllOrders)
-//router.delete("/",orderController.deletOrder)
 
 
 module.exports=router

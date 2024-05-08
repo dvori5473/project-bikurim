@@ -1,10 +1,6 @@
-
 import { classNames } from 'primereact/utils';
-import { Toast } from 'primereact/toast';
 import { AutoComplete } from "primereact/autocomplete";
-import { useNavigate } from "react-router-dom";
-import { CascadeSelect } from 'primereact/cascadeselect';
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from 'formik';
 import { Button } from 'primereact/button';
 import { Checkbox } from "primereact/checkbox";
@@ -15,10 +11,8 @@ import { setToken } from '../auth/authSlice';
 
 
 const Address=()=>{
-   
-        // const [items, setItems] = useState([]);
-const [addDefaultAddress, { isError, isSuccess, isLoading,error,data }] = useAddDefaultAddressMutation()
-    const navigate = useNavigate()
+
+const [addDefaultAddress, { isError, isSuccess,error,data }] = useAddDefaultAddressMutation()
     const dispatch=useDispatch()
     const user = useAuth()
     const [checked, setChecked] = useState(false);
@@ -28,10 +22,8 @@ const [addDefaultAddress, { isError, isSuccess, isLoading,error,data }] = useAdd
             dispatch(setToken(data))
         }
     }, [isSuccess])
-    //const toast = useRef(null);
 
     const show = () => {
-        //toast.current.show({ severity: 'success', summary: 'Form Submitted' });
     };
 
     const formik = useFormik({
@@ -90,10 +82,11 @@ const [addDefaultAddress, { isError, isSuccess, isLoading,error,data }] = useAdd
         return isFormFieldInvalid(name) ? <small className="p-error">{formik.errors[name]}</small> : <small className="p-error">&nbsp;</small>;
     };
      return(
-         
-          <div className="card flex justify-content-center">
+         <>
+          <div style={{ margin: '20px' }}>
             {!submit?
-            <form onSubmit={formik.handleSubmit} className="flex flex-column gap-2">
+            <form onSubmit={formik.handleSubmit} className="flex flex-wrap  gap-3 p-fluid"style={{width:'80%',marginLeft:'10%'}} >
+                <div className="flex-auto">
                 <label htmlFor="value">FirstName</label>
 
                 <AutoComplete
@@ -106,7 +99,8 @@ const [addDefaultAddress, { isError, isSuccess, isLoading,error,data }] = useAdd
                     }}
                 />
                 {getFormErrorMessage('firstName')}
-
+                </div>
+                <div className="flex-auto">
                 <label htmlFor="value">LastName</label>
                 <AutoComplete
                     inputId="lastName"
@@ -118,7 +112,8 @@ const [addDefaultAddress, { isError, isSuccess, isLoading,error,data }] = useAdd
                     }}
                 />
                 {getFormErrorMessage('lastName')}
-
+                </div>
+                <div className="flex-auto">
                 <label htmlFor="value">City</label>
                 <AutoComplete
                     inputId="city"
@@ -130,7 +125,8 @@ const [addDefaultAddress, { isError, isSuccess, isLoading,error,data }] = useAdd
                     }}
                 />
                 {getFormErrorMessage('city')}
-
+                </div>
+                <div className="flex-auto">
                 <label htmlFor="value">Street</label>
                 <AutoComplete
                     inputId="street"
@@ -142,10 +138,12 @@ const [addDefaultAddress, { isError, isSuccess, isLoading,error,data }] = useAdd
                     }}
                 />
                 {getFormErrorMessage('street')}
-
+                </div>
+                <div className="flex-auto">
                 <label htmlFor="value">HouseNumber</label>
                 <AutoComplete
                     inputId="houseNumber"
+                    type='number'
                     name="houseNumber"
                     value={formik.values.houseNumber}
                     className={classNames({ 'p-invalid': isFormFieldInvalid('item') })}
@@ -154,10 +152,12 @@ const [addDefaultAddress, { isError, isSuccess, isLoading,error,data }] = useAdd
                     }}
                 />
                 {getFormErrorMessage('houseNumber')}
-
+                </div>
+                <div className="flex-auto">
                 <label htmlFor="value">Apartment</label>
                 <AutoComplete
                     inputId="apartment"
+                    type='number'
                     name="apartment"
                     value={formik.values.apartment}
                     className={classNames({ 'p-invalid': isFormFieldInvalid('item') })}
@@ -166,7 +166,8 @@ const [addDefaultAddress, { isError, isSuccess, isLoading,error,data }] = useAdd
                     }}
                 />
                 {getFormErrorMessage('apartment')}
-
+                </div>
+                <div className="flex-auto">
                 <label htmlFor="value">PostalCode</label>
                 <AutoComplete
                     inputId="postalCode"
@@ -178,7 +179,8 @@ const [addDefaultAddress, { isError, isSuccess, isLoading,error,data }] = useAdd
                     }}
                 />
                 {getFormErrorMessage('postalCode')}
-
+                </div>
+                <div className="flex-auto">
                 <label htmlFor="value">Phone</label>
                 <AutoComplete
                     inputId="phone"
@@ -190,10 +192,11 @@ const [addDefaultAddress, { isError, isSuccess, isLoading,error,data }] = useAdd
                     }}
                 />
                 {getFormErrorMessage('phone')}
+                </div>
                 <Checkbox onChange={e => setChecked(e.checked)} checked={checked} type='submit'>שמירה ככתובת דפולטיבית</Checkbox>
-                <Button label="שמירת כתובת " type="submit"  />
+                <Button label="שמירת כתובת " type="submit" style={{backgroundColor:'#C08F48',border:'black'}} />
             </form>:
-            <div style={{border:"2px solid white", padding:"20px"}}>
+            <div style={{marginLeft:'35%', border: "5px solid #C08F48", padding: "", width: "30%",textAlign:'center'  }}>
                 <h4>{formik.values.firstName} {formik.values.lastName}</h4>
                 <h4>{formik.values.street} {formik.values.houseNumber} ,{formik.values.apartment}</h4>
                 <h4>{formik.values.city}</h4>
@@ -202,7 +205,7 @@ const [addDefaultAddress, { isError, isSuccess, isLoading,error,data }] = useAdd
                 
                 </div>}
         </div>
-
+</>
      )
 }
 export default Address

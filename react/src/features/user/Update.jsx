@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect} from "react";
 import { useFormik } from 'formik';
 import { Button } from 'primereact/button';
 import { classNames } from 'primereact/utils';
-import { Toast } from 'primereact/toast';
 import { AutoComplete } from "primereact/autocomplete";
 import { useUpdateUserMutation } from "./userApiSlice";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +12,7 @@ import { setToken } from "../auth/authSlice";
 export default function Update() {
     const user = useAuth()
     const dispatch=useDispatch()
-    // const [items, setItems] = useState([]);
-    const [updateUser, { isError, isSuccess, isLoading, data, error }] = useUpdateUserMutation()
+    const [updateUser, { isSuccess, data }] = useUpdateUserMutation()
     const navigate = useNavigate()
     
     useEffect(() => {
@@ -23,11 +21,6 @@ export default function Update() {
             navigate('/')
         }
     }, [isSuccess])
-    //const toast = useRef(null);
-
-    // const show = () => {
-    //     toast.current.show({ severity: 'success', summary: 'Form Submitted' });
-    // };
 
     const formik = useFormik({
         initialValues: {
@@ -49,9 +42,6 @@ export default function Update() {
             return errors;
         },
         onSubmit: (data) => {
-            //data && show();
-            //formik.resetForm();
-            //console.log(data);
             updateUser(data);
         }
     });
@@ -63,9 +53,13 @@ export default function Update() {
     };
 
     return (
-        <div className="card flex justify-content-center">
-            <form onSubmit={formik.handleSubmit} className="flex flex-column gap-2">
-                <label htmlFor="value">FirstName</label>
+        <>
+        <br></br>
+        <div style={{marginTop:'200px'}}>
+            <form onSubmit={formik.handleSubmit} className="flex flex-wrap  gap-3 p-fluid" style={{width:'50%',marginLeft:'25%'}}>
+            <h1 style={{textAlign:'center',width:'100%'}}>Edit details:</h1>
+            <div className="flex-auto">
+                <label htmlFor="value" className="font-bold block mb-2">FirstName</label>
 
                 <AutoComplete
                     inputId="firstName"
@@ -77,7 +71,9 @@ export default function Update() {
                     }}
                 />
                 {getFormErrorMessage('firstName')}
-                <label htmlFor="lastName">LastName</label>
+                </div>
+                <div className="flex-auto">
+                <label htmlFor="lastName" className="font-bold block mb-2">LastName</label>
 
                 <AutoComplete
                     inputId="lastName"
@@ -89,7 +85,9 @@ export default function Update() {
                     }}
                 />
                 {getFormErrorMessage('lastName')}
-                <label htmlFor="value">phone</label>
+                </div>
+                <div className="flex-auto">
+                <label htmlFor="value" className="font-bold block mb-2">phone</label>
 
                 <AutoComplete
                     inputId="phone"
@@ -101,7 +99,9 @@ export default function Update() {
                     }}
                 />
                 {getFormErrorMessage('phone')}
-                <label htmlFor="value">User_Id</label>
+                </div>
+                <div className="flex-auto">
+                <label htmlFor="value" className="font-bold block mb-2">User_Id</label>
 
                 <AutoComplete
                     inputId="user_id"
@@ -113,8 +113,10 @@ export default function Update() {
                     }}
                 />
                 {getFormErrorMessage('user_id')}
-                <Button label="Submit" type="submit" icon="pi pi-check" />
+                </div>
+                <Button label="Submit" type="submit" icon="pi pi-check" style={{backgroundColor:'#C08F48',border:'black'}}/>
             </form>
         </div>
+        </>
     )
 }

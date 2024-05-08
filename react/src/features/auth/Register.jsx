@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef} from "react";
 import { useFormik } from 'formik';
 import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
@@ -7,10 +7,10 @@ import { Toast } from 'primereact/toast';
 import { AutoComplete } from "primereact/autocomplete";
 import { useRegisterMutation } from "./authApiSlice";
 import { useNavigate } from "react-router-dom";
+import Error from "../../components/Error";
 
 export default function Register() {
-    // const [items, setItems] = useState([]);
-    const [registerFunc, { isError, isSuccess, isLoading, data, error }] = useRegisterMutation()
+    const [registerFunc, { isError, isSuccess, error }] = useRegisterMutation()
     const navigate = useNavigate()
     useEffect(() => {
         if (isSuccess) {
@@ -52,7 +52,6 @@ export default function Register() {
         onSubmit: (data) => {
             data && show();
             formik.resetForm();
-            //console.log(data);
             registerFunc(data)
         }
     });
@@ -64,38 +63,42 @@ export default function Register() {
     };
 
     return (
-        <div className="card flex justify-content-center">
-            <form onSubmit={formik.handleSubmit} className="flex flex-column gap-2">
+        <>
+        <br></br>
+        <div style={{ marginTop: '200px' }}>
+        <form onSubmit={formik.handleSubmit} className="flex flex-wrap  gap-3 p-fluid" style={{ width: '50%', marginLeft: '25%' }}>
+            <h1 style={{textAlign:'center',width:'100%'}}>Register:</h1>
+            
+            <div className="flex-auto">
                 <label htmlFor="value">FirstName</label>
-
                 <AutoComplete
                     inputId="firstName"
                     name="firstName"
                     value={formik.values.firstName}
-                    //  suggestions={items}
-                    //  completeMethod={search}
                     className={classNames({ 'p-invalid': isFormFieldInvalid('item') })}
                     onChange={(e) => {
                         formik.setFieldValue('firstName', e.value);
                     }}
                 />
                 {getFormErrorMessage('firstName')}
+                </div>
+                
+                <div className="flex-auto">
                 <label htmlFor="lastName">LastName</label>
-
                 <AutoComplete
                     inputId="lastName"
                     name="lastName"
                     value={formik.values.lastName}
-                    //  suggestions={items}
-                    //  completeMethod={search}
                     className={classNames({ 'p-invalid': isFormFieldInvalid('item') })}
                     onChange={(e) => {
                         formik.setFieldValue('lastName', e.value);
                     }}
                 />
                 {getFormErrorMessage('lastName')}
+                </div>
+                
+                <div className="flex-auto">
                 <label htmlFor="password">Password</label>
-
                 <Toast ref={toast} />
                 <Password
                     inputId="password"
@@ -111,50 +114,56 @@ export default function Register() {
                 />
 
                 {getFormErrorMessage('password')}
+                </div>
+                
+                <div className="flex-auto">
                 <label htmlFor="value">Email</label>
 
                 <AutoComplete
                     inputId="email"
                     name="email"
                     value={formik.values.email}
-                    //  suggestions={items}
-                    //  completeMethod={search}
                     className={classNames({ 'p-invalid': isFormFieldInvalid('item') })}
                     onChange={(e) => {
                         formik.setFieldValue('email', e.value);
                     }}
                 />
                 {getFormErrorMessage('email')}
-                <label htmlFor="value">Phone</label>
+                </div>
+                
+                <div className="flex-auto">
+                <label htmlFor="value" >Phone</label>
 
                 <AutoComplete
                     inputId="phone"
                     name="phone"
                     value={formik.values.phone}
-                    //  suggestions={items}
-                    //  completeMethod={search}
                     className={classNames({ 'p-invalid': isFormFieldInvalid('item') })}
                     onChange={(e) => {
                         formik.setFieldValue('phone', e.value);
                     }}
                 />
                 {getFormErrorMessage('phone')}
-                <label htmlFor="value">User_Id</label>
+                </div>
+                
+                <div className="flex-auto">
+                <label htmlFor="value" >User_Id</label>
 
                 <AutoComplete
                     inputId="user_id"
                     name="user_id"
                     value={formik.values.user_id}
-                    //  suggestions={items}
-                    //  completeMethod={search}
                     className={classNames({ 'p-invalid': isFormFieldInvalid('item') })}
                     onChange={(e) => {
                         formik.setFieldValue('user_id', e.value);
                     }}
                 />
-                {getFormErrorMessage('user_id')}
-                <Button label="Submit" type="submit" icon="pi pi-check" />
+                {getFormErrorMessage('user_id')} 
+                </div>
+                <Button label="Submit" type="submit" icon="pi pi-check" style={{ backgroundColor: '#C08F48', border: 'black' }} />
             </form>
+            {isError && <Error error={error.data.messages} />}
         </div>
+        </>
     )
 }

@@ -10,7 +10,6 @@ const orderApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: data
             }),
-            //invalidatesTags: ["orders"]
         }),
         updateOrder: build.mutation({
             query: (data) => ({
@@ -18,7 +17,6 @@ const orderApiSlice = apiSlice.injectEndpoints({
                 method: "PUT",
                 body: data
             }),
-            //invalidatesTags: ["orders"]
         }),
         getAllOrders: build.query({
             query: () => ({
@@ -30,7 +28,6 @@ const orderApiSlice = apiSlice.injectEndpoints({
             query: (id) => ({
                 url: `/api/order/${id}`
             }),
-            //providesTags: ["orders"]
         }),
     }),
 })
