@@ -15,7 +15,7 @@ const productApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: product
             }),
-            invalidatesTags: ["products"]
+            invalidatesTags: ["products"] 
         }),
         updateProduct: build.mutation({
             query: (product) => ({

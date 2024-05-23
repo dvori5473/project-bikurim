@@ -12,16 +12,16 @@ import { setToken } from '../auth/authSlice';
 
 const Address=()=>{
 
-const [addDefaultAddress, { isError, isSuccess,error,data }] = useAddDefaultAddressMutation()
+const [addDefaultAddress, { isSuccess,data }] = useAddDefaultAddressMutation()
     const dispatch=useDispatch()
     const user = useAuth()
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(false); 
     const[submit,setSubmit]=useState(false)
     useEffect(() => {
         if (isSuccess) {
             dispatch(setToken(data))
         }
-    }, [isSuccess])
+    }, [isSuccess,data,dispatch])
 
     const show = () => {
     };

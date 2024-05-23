@@ -22,7 +22,7 @@ export default function Login({ setToCheckout, toCheckout }) {
     const dispatch = useDispatch()
     useEffect(() => {
         if (isSuccess) {
-            dispatch(setToken(data))
+            dispatch(setToken(data)) 
             const basket = JSON.parse(localStorage.getItem("basket"))
             if (basket?.products.length > 0) {
                 updateBasket(basket)
@@ -31,7 +31,7 @@ export default function Login({ setToCheckout, toCheckout }) {
                 navigate('/')
             }
         }
-    }, [isSuccess])
+    }, [isSuccess,data,dispatch,navigate,updateBasket])
 
     useEffect(() => {
         if (updateBasketIsSuccess) {
@@ -45,7 +45,7 @@ export default function Login({ setToCheckout, toCheckout }) {
                 navigate('/')
             }
         }
-    }, [updateBasketIsSuccess])
+    }, [updateBasketIsSuccess,data,dataUpdateBasket,dispatch,navigate,setToCheckout,toCheckout])
 
 
     const formik = useFormik({
@@ -82,7 +82,7 @@ export default function Login({ setToCheckout, toCheckout }) {
         <>
 
             <br></br>
-            <div className="card" style={{ marginTop: "150px", width: '85%', marginLeft: '7.5%' }}>
+            <div  style={{ marginTop: "150px", width: '85%', marginLeft: '7.5%',minHeight:'57vh' }}>
 
                 <div className="flex flex-column md:flex-row">
                     <div className="w-full md:w-5 flex flex-column align-items-center justify-content-center gap-3 py-5" >

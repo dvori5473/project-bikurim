@@ -17,10 +17,10 @@ export default function Update() {
     
     useEffect(() => {
         if (isSuccess) {
-            dispatch(setToken(data))
+            dispatch(setToken(data)) 
             navigate('/')
         }
-    }, [isSuccess])
+    }, [isSuccess,data,dispatch,navigate])
 
     const formik = useFormik({
         initialValues: {
@@ -55,7 +55,7 @@ export default function Update() {
     return (
         <>
         <br></br>
-        <div style={{marginTop:'200px'}}>
+        <div style={{marginTop:'200px',minHeight:'53vh'}}>
             <form onSubmit={formik.handleSubmit} className="flex flex-wrap  gap-3 p-fluid" style={{width:'50%',marginLeft:'25%'}}>
             <h1 style={{textAlign:'center',width:'100%'}}>Edit details:</h1>
             <div className="flex-auto">

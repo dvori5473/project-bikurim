@@ -28,7 +28,7 @@ export default function AdminProducts() {
         price: 0,
         quantity: 0,
         rating: 0,
-        inventoryStatus: 'INSTOCK'
+        inventoryStatus: 'INSTOCK' 
     };
 
     const [products, setProducts] = useState(null);
@@ -39,7 +39,6 @@ export default function AdminProducts() {
     const [product, setProduct] = useState(emptyProduct);
     const [selectedProducts, setSelectedProducts] = useState(null);
     const [submitted, setSubmitted] = useState(false);
-    const [globalFilter, setGlobalFilter] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
@@ -55,11 +54,7 @@ export default function AdminProducts() {
             const filterData = !search ? data : data.filter(p => (p.name.indexOf(search) > -1) || (p.description.indexOf(search) > -1))
             setProducts(filterData)
         }
-    }, [isSuccess]);
-    useEffect(() => {
-        const filterData = !search ? data : data.filter(p => (p.name.indexOf(search) > -1) || (p.description.indexOf(search) > -1))
-        setProducts(filterData)
-    }, [search]);
+    }, [isSuccess,data,search]);
 
     useEffect(() => {
         if (is) {
@@ -91,7 +86,7 @@ export default function AdminProducts() {
             setProducts(_products);
             setProduct(emptyProduct);
         }
-    }, [deletInSuccess]);
+    }, [deletInSuccess]); 
     
     if(isLoading)return <IsLoading/>
 
@@ -291,7 +286,7 @@ export default function AdminProducts() {
                     <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
                         dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"  header={header}>
                         <Column field="name" header="Name" sortable style={{ minWidth: '10rem', maxWidth: '10rem' }}></Column>
                         <Column field="description" header="Description" sortable style={{ minWidth: '17rem', maxWidth: '17rem' }}></Column>
                         <Column field="imageURL" header="Image" body={imageBodyTemplate}></Column>

@@ -14,7 +14,7 @@ const authApiSlice = apiSlice.injectEndpoints({
             query: (loginData) => ({
                 url: "/api/auth/login",
                 method: "POST",
-                body: loginData
+                body: loginData 
             })
         })
     })

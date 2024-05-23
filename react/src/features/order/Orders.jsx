@@ -17,15 +17,15 @@ const Orders = () => {
     const [updateOrderDialog, setUpdateOrderDialog] = useState(false);
     const { id } = useParams()
 
-    let emptyOrder = {
-        _id: null,
-        status: ''
-    };
-    const { data: ordersData, isLoading, isSuccess } = useGetOrderbyIdQuery(id)
+   
+    const { data: ordersData, isLoading, isSuccess } = useGetOrderbyIdQuery(id) 
     const [updateOrders, { isSuccess: is, data: updateOrderData }] = useUpdateOrderMutation()
 
     const [orders, setOrders] = useState([]);
-    const [order, setOrder] = useState([]);
+    const [order, setOrder] = useState({
+        _id: null,
+        status: ''
+    });
     const [expandedRows, setExpandedRows] = useState(null);
     const toast = useRef(null);
 
@@ -34,10 +34,9 @@ const Orders = () => {
         if (isSuccess) {
             setOrders(ordersData)
         }
-    }, [isSuccess]);
+    }, [isSuccess,ordersData]);
 
     useEffect(() => {
-
         if (is) {
             let _orders = orders.map(o => {
                 if (o._id === updateOrderData._id) {
@@ -47,7 +46,10 @@ const Orders = () => {
             })
 
             setOrders(_orders)
-            setOrder(emptyOrder)
+            setOrder({
+                _id: null,
+                status: ''
+            })
         }
     }, [is]);
 
@@ -154,7 +156,8 @@ const Orders = () => {
     return (
         <>
             <br></br>
-            <div className="card" style={{ marginTop: "100px" }}>
+            <div style={{ minHeight:'63vh'}}>
+            <div className="card" style={{ marginTop: "100px"}}>
                 <Toast ref={toast} />
                 <DataTable value={orders} expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)}
                     rowExpansionTemplate={rowExpansionTemplate}
@@ -167,6 +170,7 @@ const Orders = () => {
                     <Column field="updatedAt" header="updatedAt" sortable style={{ minWidth: '5rem' }} />
                     {isAdmin ? <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column> : <></>}
                 </DataTable>
+            </div>
             </div>
             <Dialog visible={updateOrderDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={updateOrderDialogFooter} onHide={hideUpdateOrderDialog} >
                 <div className="confirmation-content">

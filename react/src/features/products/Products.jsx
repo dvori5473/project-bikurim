@@ -17,7 +17,7 @@ const Products = () => {
     const getSeverity = (product) => {
         if (product.quantity >= 100)
             return "succes"
-        if (product.quantity < 100 && product.quantity > 0)
+        if (product.quantity < 100 && product.quantity > 0) 
             return "warning"
         if (product.quantity === 0)
             return "danger"

@@ -18,7 +18,7 @@ const orderApiSlice = apiSlice.injectEndpoints({
                 body: data
             }),
         }),
-        getAllOrders: build.query({
+        getAllOrders: build.query({ 
             query: () => ({
                 url: '/api/order',
             }),

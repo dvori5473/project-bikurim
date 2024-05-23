@@ -17,7 +17,7 @@ export default function Checkout() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const user = useAuth()
-    const [flag, setFlag] = useState(false)
+    const [flag, setFlag] = useState(false) 
 
     useEffect(() => {
         if (issuccess) {
@@ -33,11 +33,11 @@ export default function Checkout() {
             }
         }
 
-    }, [issuccess, is])
+    }, [issuccess, is,cleaningBasket,data,dispatch,flag,navigate,user._id]) 
     return (
         <>
             <br></br>
-            <div style={{ marginTop: '100px' }}>
+            <div style={{ marginTop: '100px' ,minHeight:'65vh'}}>
                 <Accordion multiple activeIndex={[0]}>
                     <AccordionTab header="שיטת משלוח">
                         <p className="m-0">

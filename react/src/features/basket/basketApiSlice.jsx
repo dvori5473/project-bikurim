@@ -18,7 +18,7 @@ const basketApiSlice = apiSlice.injectEndpoints({
                 body: { _id: _id,product_id:product_id }
             }),
             invalidatesTags: ["products"]
-        }),
+        }), 
         updateProductQuantity: build.mutation({
             query: ({  _id, product_id,quantity  }) => ({
                 url: '/api/user/updateProductQuantity',

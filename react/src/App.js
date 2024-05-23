@@ -52,6 +52,9 @@ function App() {
  
    
    </Routes>
+   <div style={{ width: '100%', marginTop: '0px', bottom: '0', padding: '0px', border: 'none' }}>
+                <img src={'footer.png'} width="100%" alt=""/>
+            </div>
     </>
 
   );

@@ -13,7 +13,7 @@ const Search = () => {
                 <InputText type="search" 
                 defaultValue={search||""}
                 onChange={(e) => {
-                    
+                     
                     setSearchParams({ search: e.target.value })
                 }} placeholder="Search..." />
             </span>

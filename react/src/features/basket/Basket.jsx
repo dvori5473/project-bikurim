@@ -1,6 +1,6 @@
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import { useGetProductsQuery } from '../products/productApiSlice';
 import useAuth from '../../hooks/useAuth';
 import { Button } from 'primereact/button';
@@ -19,14 +19,12 @@ const Basket = ({ visibleRight, setVisibleRight }) => {
         localStorage.setItem('basket', JSON.stringify(basket))
     }
 
-    //const [products, setProducts] = useState([]);
     const { data: allproducts, isLoading, isSuccess} = useGetProductsQuery()
     const navigate = useNavigate()
     const full_basket = basket.products?.map((p) => { return ({ product: allproducts?.find(pr => pr._id === p.product_id), quantity: p.quantity }) })
     useEffect(() => {
         if (isSuccess) {
-            //const full_baskets = basket.products?.map((p) => { return ({ product: allproducts?.find(pr => pr._id === p.product_id), quantity: p.quantity }) })
-            //setProducts(full_baskets)
+
         }
     }, [isSuccess]);
 

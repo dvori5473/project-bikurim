@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import productSlice from "../features/products/productSlice";
 import apiSlice from "./apiSlice";
 import authSliceReducer from "../features/auth/authSlice";
 
@@ -13,4 +12,4 @@ const store=configureStore({
       middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
       devTools:true
 })
-export default store
+export default store 

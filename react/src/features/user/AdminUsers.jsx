@@ -17,7 +17,7 @@ import IsLoading from '../../components/IsLoading';
 export default function AdminUsers() {
     let emptyUser = {
         _id: null,
-        firstName: '',
+        firstName: '', 
         lastName: '',
         email: '',
         phone: '',
@@ -30,8 +30,6 @@ export default function AdminUsers() {
     const [userDialog, setUserDialog] = useState(false);
     const [user, setUser] = useState(emptyUser);
     const [selectedUsers, setSelectedUsers] = useState(null);
-    const [submitted, setSubmitted] = useState(false);
-    const [globalFilter, setGlobalFilter] = useState(null);
     const [selectedRole, setSelectedRole] = useState(null);
     const [selectedActive, setSelectedActive] = useState(null);
 
@@ -100,13 +98,11 @@ export default function AdminUsers() {
     const hideDialog = () => {
         setSelectedRole(null)
         setSelectedActive(null)
-        setSubmitted(false);
         setUserDialog(false);
     };
 
 
     const saveUser = () => {
-        setSubmitted(true);
         updateUser({ _id: user._id, firstName: user.firstName, lastName: user.lastName, phone: user.phone, roles: selectedRole ? selectedRole.name : user.roles, active: selectedActive ? selectedActive.name : user.active, user_id: user.user_id })
         setUserDialog(false)
     }
@@ -175,7 +171,7 @@ export default function AdminUsers() {
                     <DataTable ref={dt} value={users} selection={selectedUsers} onSelectionChange={(e) => setSelectedUsers(e.value)}
                         dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" globalFilter={globalFilter} header={header}>
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" header={header}>
                         <Column field="firstName" header="FirstName" sortable style={{ minWidth: '10rem' }}></Column>
                         <Column field="lastName" header="LastName" sortable style={{ maxWidth: '12rem' }}></Column>
                         <Column field="email" header="Email" sortable style={{ maxWidth: '12rem' }}></Column>
@@ -185,23 +181,21 @@ export default function AdminUsers() {
                         <Column field="user_id" header="User_id" sortable style={{ maxWidth: '12rem' }}></Column>
                         <Column header="Orders" body={order}>
                         </Column>
-                        {/* <Column field="rating" header="Reviews" body={ratingBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column> */}
-                        {/* <Column field="inventoryStatus" header="Status" body={statusBodyTemplate} sortable style={{ minWidth: '12rem' }}></Column> */}
                         <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
                     </DataTable>
                 </div>
 
-                <Dialog visible={userDialog} style={{ width: '18rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="User Details" modal className="p-fluid" footer={userDialogFooter} onHide={hideDialog}>
+                <Dialog visible={userDialog} style={{ width: '20rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="User Details" modal className="p-fluid" footer={userDialogFooter} onHide={hideDialog}>
 
                     {user.image && <img src={`https://primefaces.org/cdn/primereact/images/product/${user.image}`} alt={user.image} className="product-image block m-auto pb-3" />}
 
                     <div className="field justify-content-center">
-                        <label htmlFor="roles" className="font-bold">
+                        <label htmlFor="name" className="font-bold">
                             Roles
                         </label>
                         <CascadeSelect value={selectedRole ? selectedRole : user.roles} onChange={(e) => setSelectedRole(e.value)} options={roles}
-                            optionLabel="name" optionGroupChildren={[]}
-                            className="w-full md:w-14rem" breakpoint="767px" placeholder="Select a Role" style={{ minWidth: '14rem' }} />
+                            optionLabel="name" optionGroupLabel='name' optionGroupChildren={[]}
+                            className="w-full md:w-14rem" breakpoint="767px" placeholder="Select a Role" style={{ minWidth: '16.5rem' }} />
                     </div>
 
                     <div className="field justify-content-center">
@@ -211,7 +205,7 @@ export default function AdminUsers() {
                         </label>
                         <CascadeSelect value={selectedActive ? selectedActive : user.active} onChange={(e) => setSelectedActive(e.value)} options={active}
                             optionLabel="name" optionGroupLabel='name' optionGroupChildren={[]}
-                            className="w-full md:w-14rem" breakpoint="767px" placeholder="Select a Active" style={{ minWidth: '14rem' }} />
+                            className="w-full md:w-14rem" breakpoint="767px" placeholder="Select a Active" style={{ minWidth: '16.5rem' }} />
                     </div>
 
 

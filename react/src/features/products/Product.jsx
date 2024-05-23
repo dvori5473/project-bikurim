@@ -20,13 +20,13 @@ const Product = ({ setVisibleRight }) => {
     const [addProduct, { isSuccess, data }] = useAddProductItemMutation()
     const { data: product, isLoading } = useGetProductbyIdQuery(id)
 
-    useEffect(() => {
+    useEffect(() => { 
         if (isSuccess) {
             dispatch(setToken(data))
             setVisibleRight(true)
         }
-    }, [isSuccess])
-    if (isLoading) return <IsLoading/>
+    }, [isSuccess,data,dispatch,setVisibleRight])
+    if (isLoading) return <IsLoading/> 
 
     const responsiveOptions = [
         {
@@ -60,7 +60,7 @@ const Product = ({ setVisibleRight }) => {
             const basket = JSON.parse(localStorage.getItem("basket"))
             if (basket) {
                 const basket = JSON.parse(localStorage.getItem("basket"))
-                const productFind = basket.products.find(p => p.product_id == product._id)
+                const productFind = basket.products.find(p => p.product_id === product._id)
                 if (!productFind) {
                     basket.products.push({ product_id: product._id, quantity: value, description: `${product.name} ,${product.price}, ${product.description},`, imageURL: product.imageURL[0] })
                     localStorage.setItem("basket", JSON.stringify(
@@ -90,7 +90,7 @@ const Product = ({ setVisibleRight }) => {
     return (
         <>
             <br></br>
-            <div className="" style={{ direction: 'rtl', marginTop: '150px', width: '70%', marginLeft: '5%' }}>
+            <div  style={{ direction: 'rtl', marginTop: '150px', width: '70%', marginLeft: '5%',minHeight:'57vh' }}>
                 <div className="flex flex-column md:flex-row" >
                     <div className="flex-column md:flex-row" style={{ maxWidth: '500px', minWidth: '300px' }}>
                         <h1><b>{product.name}</b></h1>

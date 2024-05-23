@@ -12,7 +12,7 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const useriItems = [
+    const useriItems = [ 
 
         {
             label: 'חנות',

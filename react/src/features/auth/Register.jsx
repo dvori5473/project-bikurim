@@ -16,11 +16,11 @@ export default function Register() {
         if (isSuccess) {
             navigate("/login")
         }
-    }, [isSuccess])
+    }, [isSuccess,navigate])
     const toast = useRef(null);
 
     const show = () => {
-        toast.current.show({ severity: 'success', summary: 'Form Submitted' });
+        toast.current.show({ severity: 'success', summary: 'Form Submitted' }); 
     };
 
     const formik = useFormik({
@@ -65,7 +65,7 @@ export default function Register() {
     return (
         <>
         <br></br>
-        <div style={{ marginTop: '200px' }}>
+        <div style={{ marginTop: '200px',minHeight:'53vh'}}>
         <form onSubmit={formik.handleSubmit} className="flex flex-wrap  gap-3 p-fluid" style={{ width: '50%', marginLeft: '25%' }}>
             <h1 style={{textAlign:'center',width:'100%'}}>Register:</h1>
             
