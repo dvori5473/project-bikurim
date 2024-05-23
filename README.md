@@ -14,7 +14,7 @@ Key Components:
 •	UserAuth: Manages user login and registration.
 Setup Instructions:
 1.	Clone the Repository:
-git clone https://github.com/username/my-bakery-client.git
+git clone https://github.com/dvori5473/project-bikorim).git
 cd client
 2.	Install Dependencies:
 npm install_APP_API_URL=http://localhost:0 
