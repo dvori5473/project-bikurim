@@ -1,6 +1,6 @@
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useGetProductsQuery } from '../products/productApiSlice';
 import useAuth from '../../hooks/useAuth';
 import { Button } from 'primereact/button';
@@ -19,16 +19,16 @@ const Basket = ({ visibleRight, setVisibleRight }) => {
         localStorage.setItem('basket', JSON.stringify(basket))
     }
 
-    const { data: allproducts, isLoading, isSuccess} = useGetProductsQuery()
+    const { data: allproducts, isLoading, isSuccess } = useGetProductsQuery()
     const navigate = useNavigate()
-    const full_basket = basket.products?.map((p) => { return ({ product: allproducts?.find(pr => pr._id === p.product_id), quantity: p.quantity }) })
+    const full_basket = basket.products?.map((p) => { return ({ product: allproducts?.find(pr => pr._id === p.product_id), quantity: p.quantity, key: p.product_id }) })
     useEffect(() => {
         if (isSuccess) {
 
         }
     }, [isSuccess]);
 
-   if(isLoading)return <></>;
+    if (isLoading) return <></>;
 
     const imageBodyTemplate = (p) => {
         return <div className='flex p-overlay-badge'>

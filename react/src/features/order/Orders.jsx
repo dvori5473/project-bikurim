@@ -107,7 +107,7 @@ const Orders = () => {
         return (
             <div className="p-3">
                 <h5>Orders for {data.products._id}</h5>
-                <DataTable value={data.products}>
+                <DataTable value={data.products} dataKey="_id">
                     <Column field="product_id" header="product_id" sortable></Column>
                     <Column field="quantity" header="quantity" sortable></Column>
                     <Column field="imageURL" header="Image" body={imageBodyTemplate}></Column>
@@ -130,6 +130,7 @@ const Orders = () => {
             </div>
         );
     };
+    
 
     const header = (
         <div className="flex flex-wrap justify-content-end gap-2">
@@ -159,16 +160,23 @@ const Orders = () => {
             <div style={{ minHeight:'63vh'}}>
             <div className="card" style={{ marginTop: "100px"}}>
                 <Toast ref={toast} />
-                <DataTable value={orders} expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)}
+                <DataTable 
+                    value={orders} 
+                    expandedRows={expandedRows} 
+                    onRowToggle={(e) => setExpandedRows(e.data)}
                     rowExpansionTemplate={rowExpansionTemplate}
-                    dataKey="_id" header={header} tableStyle={{ minWidth: '40rem' }}>
+                    dataKey="_id"  // Ensure the key for each row is set correctly
+                    header={header} 
+                    tableStyle={{ minWidth: '40rem' }}>
+                    
                     <Column expander={allowExpansion} style={{ width: '5rem' }} />
                     <Column field="_id" header="id" sortable style={{ minWidth: '5rem' }} />
                     <Column field="payment" header="payment" style={{ minWidth: '5rem' }} />
                     <Column field="status" header="status" style={{ minWidth: '5rem' }} />
                     <Column field="createdAt" header="order date" sortable style={{ minWidth: '5rem' }} />
                     <Column field="updatedAt" header="updatedAt" sortable style={{ minWidth: '5rem' }} />
-                    {isAdmin ? <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column> : <></>}
+                    
+                    {isAdmin && <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }} />}
                 </DataTable>
             </div>
             </div>

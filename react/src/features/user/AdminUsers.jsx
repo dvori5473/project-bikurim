@@ -65,7 +65,7 @@ export default function AdminUsers() {
 
     useEffect(() => {
         if (isSuccess) {
-            const filterData = !search ? data : data.filter(p => (p.firstName.indexOf(search) > -1) || (p.lastName.indexOf(search) > -1) || (p.email.indexOf(search) > -1))
+            let filterData = !search ? data : data.filter(p => (p.firstName.indexOf(search) > -1) || (p.lastName.indexOf(search) > -1) || (p.email.indexOf(search) > -1))
             setUsers(filterData)
         }
     }, [isSuccess]);
@@ -137,7 +137,7 @@ export default function AdminUsers() {
     const order = (rowData) => {
         return (
             <React.Fragment>
-                <Button icon="pi pi-box" rounded outlined severity="danger" onClick={() => { navigate(`/orders/${rowData._id}`) }} disabled={(allOrders.filter(o => o.customerID === rowData._id)).length === 0} />
+                  <Button icon="pi pi-box" rounded outlined severity="danger" onClick={() => { navigate(`/orders/${rowData._id}`) }} disabled={(allOrders?.filter(o => o.customerID === rowData._id)).length === 0} />
             </React.Fragment>
         );
 
@@ -169,7 +169,7 @@ export default function AdminUsers() {
                     <Toolbar className="mb-4" right={rightToolbarTemplate}></Toolbar>
 
                     <DataTable ref={dt} value={users} selection={selectedUsers} onSelectionChange={(e) => setSelectedUsers(e.value)}
-                        dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
+                        dataKey="_id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" header={header}>
                         <Column field="firstName" header="FirstName" sortable style={{ minWidth: '10rem' }}></Column>
@@ -214,4 +214,4 @@ export default function AdminUsers() {
             </div>
         </>
     );
-}
+}              

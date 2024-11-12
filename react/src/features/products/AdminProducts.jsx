@@ -28,7 +28,7 @@ export default function AdminProducts() {
         price: 0,
         quantity: 0,
         rating: 0,
-        inventoryStatus: 'INSTOCK' 
+        inventoryStatus: 'INSTOCK'
     };
 
     const [products, setProducts] = useState(null);
@@ -47,14 +47,14 @@ export default function AdminProducts() {
     const [addProduct, { isSuccess: is, data: addProductData }] = useAddProductMutation()
     const [updateProduct, { isSuccess: updateInSuccess, data: updateProductData }] = useUpdateProductMutation()
     const [deleteProductItem, { isSuccess: deletInSuccess }] = useDeleteProductItemMutation()
-    const { data, isSuccess,isLoading } = useGetProductsQuery()
+    const { data, isSuccess, isLoading } = useGetProductsQuery()
 
     useEffect(() => {
         if (isSuccess) {
             const filterData = !search ? data : data.filter(p => (p.name.indexOf(search) > -1) || (p.description.indexOf(search) > -1))
             setProducts(filterData)
         }
-    }, [isSuccess,data,search]);
+    }, [isSuccess, data, search]);
 
     useEffect(() => {
         if (is) {
@@ -86,9 +86,9 @@ export default function AdminProducts() {
             setProducts(_products);
             setProduct(emptyProduct);
         }
-    }, [deletInSuccess]); 
-    
-    if(isLoading)return <IsLoading/>
+    }, [deletInSuccess]);
+
+    if (isLoading) return <IsLoading />
 
     const formatCurrency = (value) => {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'ILS' });
@@ -119,9 +119,8 @@ export default function AdminProducts() {
     };
 
     const saveProduct = () => {
-
+        setSubmitted(true);
         if (isAdd) {
-            setSubmitted(true);
             if (product.name.trim() && product.price && selectedFile) {
                 const formData = new FormData();
                 formData.append('name', product.name);
@@ -138,7 +137,6 @@ export default function AdminProducts() {
         }
 
         if (isUpdate) {
-            setSubmitted(true);
             if (product.name.trim() && product.price) {
                 const formData = new FormData();
                 formData.append('_id', product._id);
@@ -284,9 +282,9 @@ export default function AdminProducts() {
                     <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
 
                     <DataTable ref={dt} value={products} selection={selectedProducts} onSelectionChange={(e) => setSelectedProducts(e.value)}
-                        dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
+                        dataKey="_id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"  header={header}>
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" header={header}>
                         <Column field="name" header="Name" sortable style={{ minWidth: '10rem', maxWidth: '10rem' }}></Column>
                         <Column field="description" header="Description" sortable style={{ minWidth: '17rem', maxWidth: '17rem' }}></Column>
                         <Column field="imageURL" header="Image" body={imageBodyTemplate}></Column>
@@ -313,9 +311,13 @@ export default function AdminProducts() {
                         <InputTextarea id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} />
 
                     </div>
-                    <input type="file" name="imageURL" multiple onChange={handleFileChange} />
-                    {submitted && !selectedFile && isAdd && <small className="p-error">image is required</small>}
-                    <div className="formgrid grid">
+                    <div className="field">
+                        <label htmlFor="imageURL" className="font-bold">
+                            Image
+                        </label>
+                        <input type="file" name="imageURL" multiple onChange={handleFileChange} />
+                        {submitted && !selectedFile && isAdd && <small className="p-error">Image is required</small>}
+                    </div>                    <div className="formgrid grid">
                         <div className="field col">
                             <label htmlFor="price" className="font-bold">
                                 Price
