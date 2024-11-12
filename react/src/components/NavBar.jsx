@@ -17,25 +17,41 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
         {
             label: 'חנות',
             url: '/product',
-            key: 1
+            key: 'shop'
         },
         {
             label: `hello ${firstName ? firstName : 'Israel'}`,
-            key: 2,
+            key: 'user-hello',
             items: [
                 {
-                    label: <Button style={{ color: 'white', opacity: "100%" }} text severity='info' onClick={() => { dispatch(removeToken()); navigate("/") }}>התנתקות</Button>,
-                    key: 3
+                    // label: <Button style={{ color: 'white', opacity: "100%" }} text severity='info' onClick={() => { dispatch(removeToken()); navigate("/") }}>התנתקות</Button>,
+                    // key: 'logout'
+                    label: (
+                        <span key="logout-btn">
+                            <Button
+                                style={{ color: 'white', opacity: '100%' }}
+                                text
+                                severity="info"
+                                onClick={() => {
+                                    dispatch(removeToken());
+                                    navigate('/');
+                                }}
+                            >
+                                התנתקות
+                            </Button>
+                        </span>
+                    ),
+                    key: 'logout'
                 },
                 {
                     label: 'עריכת פרטים אישיים',
                     url: '/update',
-                    key: 4
+                    key: 'edit-profile'
                 },
                 {
                     label: 'ההזמנות שלי',
                     url: `/orders/${_id}`,
-                    key: 5
+                    key: 'my-orders'
                 },
             ]
 
@@ -45,26 +61,42 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
         {
             label: 'משתמשים',
             url: '/adminUsers',
-            key: 6
+            key: 'admin-users'
 
         },
         {
             label: 'מוצרים',
             url: '/adminProducts',
-            key: 7
+            key: 'admin-products' 
         },
         {
             label: `hello ${firstName ? firstName : 'Israel'}`,
-            key: 8,
+            key: 'admin-hello',
             items: [
                 {
-                    label: <Button style={{ color: 'white', opacity: "100%" }} text severity='info' onClick={() => { navigate('/'); dispatch(removeToken()) }}>התנתקות</Button>,
-                    key: 9
+                    // label: <Button style={{ color: 'white', opacity: "100%" }} text severity='info' onClick={() => { navigate('/'); dispatch(removeToken()) }}>התנתקות</Button>,
+                    // key: 'logout-admin'
+                    label: (
+                        <span key="logout-btn">
+                            <Button
+                                style={{ color: 'white', opacity: '100%' }}
+                                text
+                                severity="info"
+                                onClick={() => {
+                                    dispatch(removeToken());
+                                    navigate('/');
+                                }}
+                            >
+                                התנתקות
+                            </Button>
+                        </span>
+                    ),
+                    key: 'logout-admin'
                 },
                 {
                     label: 'עריכת פרטים אישיים',
                     url: '/update',
-                    key: 10
+                    key: 'edit-profile-admin'
                 },
 
             ]
@@ -75,7 +107,7 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
         {
             label: 'חנות',
             url: '/product',
-            key: 11
+            key: 'simple-shop'
         },
         {
             label: `hello ${firstName ? firstName : 'Israel'}`,
@@ -84,7 +116,7 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
                 {
                     label: 'רישום/התחברות',
                     url: '/login',
-                    key: 12
+                    key: 'login'
                 },
             ]
 
@@ -103,7 +135,7 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
         <>
             <div style={{ backgroundColor: '#C08F48', opacity: '0.9', padding: '5px', position: 'fixed', width: '95%', left: '2.5%', zIndex: '100' }}>
 
-                <Menubar model={items} start={start} end={isAdmin ? null : end} />
+                <Menubar key="menubar" model={items} start={start} end={isAdmin ? null : end} />
 
                 {!isAdmin ? <Basket setVisibleRight={setVisibleRight} visibleRight={visibleRight} /> : <></>}
             </div>
