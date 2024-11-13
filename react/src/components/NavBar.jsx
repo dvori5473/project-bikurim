@@ -20,12 +20,10 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
             key: 'shop'
         },
         {
-            label: `hello ${firstName ? firstName : 'Israel'}`,
+            label: `hello ${firstName ? firstName : 'User'}`,
             key: 'user-hello',
             items: [
                 {
-                    // label: <Button style={{ color: 'white', opacity: "100%" }} text severity='info' onClick={() => { dispatch(removeToken()); navigate("/") }}>התנתקות</Button>,
-                    // key: 'logout'
                     label: (
                         <span key="logout-btn">
                             <Button
