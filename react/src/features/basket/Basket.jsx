@@ -32,7 +32,7 @@ const Basket = ({ visibleRight, setVisibleRight }) => {
 
     const imageBodyTemplate = (p) => {
         return <div className='flex p-overlay-badge'>
-            <img src={"http://localhost:1234/uploads/" + p.product.imageURL[0].split("\\")[2]} alt={p.product.name} className="w-6rem shadow-2 border-round" />;
+            <img src={"https://server-knc7.onrender.com/uploads/" + p.product.imageURL[0].split("\\")[2]} alt={p.product.name} className="w-6rem shadow-2 border-round" />;
             <Badge value={p.quantity} style={{ backgroundColor: 'white' }} ></Badge>
         </div>
     };
@@ -52,7 +52,7 @@ const Basket = ({ visibleRight, setVisibleRight }) => {
     return (
         <Sidebar visible={visibleRight} position="right" onHide={() => setVisibleRight(false)}>
             {full_basket.length === 0 ? <><img className=" xl:w-15rem  xl:block mx-auto" src={'emptyCart.png'} alt={'emptyCart'} style={{ marginTop: '100px' }} />
-                <h2 style={{ textAlign: 'center' }}>Oups! Your cart is empty,</h2>
+                <h2 style={{ textAlign: 'center' }}>Oops! Your cart is empty,</h2>
                 <Button onClick={() => { setVisibleRight(false); navigate('/product') }} style={{ marginLeft: '75px', color: 'white', backgroundColor: 'transparent', border: 'none' }}>continue shopping</Button>
             </>
                 :

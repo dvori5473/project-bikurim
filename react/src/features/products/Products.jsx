@@ -38,7 +38,7 @@ const Products = () => {
         return (
             <div className="col-12" key={product._id}>
                 <div className={classNames('flex flex-column xl:flex-row xl:align-items-start p-4 gap-4', { 'border-top-1 surface-border': index !== 0 })}>
-                    <Link to={`/product/${product._id}`}><img className="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" src={"http://localhost:1234/uploads/" + product.imageURL[0].split("\\")[2]} alt={product.name} style={{ width: '80px', height: '120px' }} /></Link>
+                    <Link to={`/product/${product._id}`}><img className="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round" src={"https://server-knc7.onrender.com/uploads/" + product.imageURL[0].split("\\")[2]} alt={product.name} style={{ width: '80px', height: '120px' }} /></Link>
                     <div className="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
                         <div className="flex flex-column align-items-center sm:align-items-start gap-3">
                             <div className="text-2xl font-bold text-900" style={{textAlign:'center'}}>{product.name}</div>
@@ -65,7 +65,7 @@ const Products = () => {
                         <Tag value={getStatus(product)} severity={getSeverity(product)}></Tag>
                     </div>
                     <div className="flex flex-column align-items-center gap-3 py-5">
-                        <Link to={`/product/${product._id}`}style={{width:'100%',marginLeft:'20%'}}><img className="w-9 shadow-2 border-round" src={"http://localhost:1234/uploads/" + product.imageURL[0].split("\\")[2]} alt={product.name} style={{ width: '80px', height: '120px' }} /></Link>
+                        <Link to={`/product/${product._id}`}style={{width:'100%',marginLeft:'20%'}}><img className="w-9 shadow-2 border-round" src={"https://server-knc7.onrender.com/uploads/" + product.imageURL[0].split("\\")[2]} alt={product.name} style={{ width: '80px', height: '120px' }} /></Link>
                         <div className="text-2xl font-bold"style={{textAlign:'center', height:'70px'}}>{product.name}</div>
                     </div>
                     <div className="flex align-items-center justify-content-between">

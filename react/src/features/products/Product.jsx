@@ -46,11 +46,11 @@ const Product = ({ setVisibleRight }) => {
 
     const itemTemplate = (item) => {
 
-        return <img src={"http://localhost:1234/uploads/" + item.split("\\")[2]} alt={item.alt} style={{ width: '100%', maxHeight: '420px' }} />;
+        return <img src={"https://server-knc7.onrender.com/uploads/" + item.split("\\")[2]} alt={item.alt} style={{ width: '100%', maxHeight: '420px' }} />;
     }
 
     const thumbnailTemplate = (item) => {
-        return <img src={"http://localhost:1234/uploads/" + item.split("\\")[2]} alt={item.alt} style={{ width: '50px' }} />;
+        return <img src={"https://server-knc7.onrender.com/uploads/" + item.split("\\")[2]} alt={item.alt} style={{ width: '50px' }} />;
     }
     const addProductToBasket = () => {
         if (localStorage.getItem("token")) {

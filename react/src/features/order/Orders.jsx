@@ -101,7 +101,7 @@ const Orders = () => {
     };
     const imageBodyTemplate = (rowData) => {
         if (rowData.imageURL)
-            return <img src={"http://localhost:1234/uploads/" + rowData.imageURL.split("\\")[2]} alt={rowData.imageURL} className="shadow-2 border-round" style={{ width: '64px' }} />;
+            return <img src={"https://server-knc7.onrender.com/uploads/" + rowData.imageURL.split("\\")[2]} alt={rowData.imageURL} className="shadow-2 border-round" style={{ width: '64px' }} />;
     };
     const rowExpansionTemplate = (data) => {
         return (
