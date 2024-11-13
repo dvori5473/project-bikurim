@@ -68,7 +68,7 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
             key: 'admin-products' 
         },
         {
-            label: `hello ${firstName ? firstName : 'Israel'}`,
+            label: `hello ${firstName ? firstName : 'User'}`,
             key: 'admin-hello',
             items: [
                 {
@@ -108,7 +108,7 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
             key: 'simple-shop'
         },
         {
-            label: `hello ${firstName ? firstName : 'Israel'}`,
+            label: `hello ${firstName ? firstName : 'User'}`,
             key: 'simple-user-hello',
             items: [
                 {
