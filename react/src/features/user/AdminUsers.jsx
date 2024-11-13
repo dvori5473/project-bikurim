@@ -60,7 +60,7 @@ export default function AdminUsers() {
 
     const search = searchParams.get("search")
     const { data, isSuccess,isLoading:getUserLoading } = useGetAllUsersQuery()
-    const { data: allOrders, isLoading:getOrderLoading } = useGetAllOrdersQuery()
+    const { data: allOrders=[], isLoading:getOrderLoading } = useGetAllOrdersQuery()
     const [updateUser, { isSuccess: updateInSuccess, data: updateUserData }] = useUpdateUserMutation()
 
     useEffect(() => {
@@ -137,7 +137,7 @@ export default function AdminUsers() {
     const order = (rowData) => {
         return (
             <React.Fragment>
-                  <Button icon="pi pi-box" rounded outlined severity="danger" onClick={() => { navigate(`/orders/${rowData._id}`) }} disabled={(allOrders?.filter(o => o.customerID === rowData._id)).length === 0} />
+                  <Button icon="pi pi-box" rounded outlined severity="danger" onClick={() => { navigate(`/orders/${rowData._id}`) }} disabled={(allOrders?.filter(o => o.customerID === rowData._id))?.length === 0} />
             </React.Fragment>
         );
 
