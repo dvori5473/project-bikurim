@@ -20,12 +20,10 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
             key: 'shop'
         },
         {
-            label: `hello ${firstName ? firstName : 'Israel'}`,
+            label: `hello ${firstName ? firstName : 'User'}`,
             key: 'user-hello',
             items: [
                 {
-                    // label: <Button style={{ color: 'white', opacity: "100%" }} text severity='info' onClick={() => { dispatch(removeToken()); navigate("/") }}>התנתקות</Button>,
-                    // key: 'logout'
                     label: (
                         <span key="logout-btn">
                             <Button
@@ -70,12 +68,10 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
             key: 'admin-products' 
         },
         {
-            label: `hello ${firstName ? firstName : 'Israel'}`,
+            label: `hello ${firstName ? firstName : 'User'}`,
             key: 'admin-hello',
             items: [
                 {
-                    // label: <Button style={{ color: 'white', opacity: "100%" }} text severity='info' onClick={() => { navigate('/'); dispatch(removeToken()) }}>התנתקות</Button>,
-                    // key: 'logout-admin'
                     label: (
                         <span key="logout-btn">
                             <Button
@@ -110,7 +106,7 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
             key: 'simple-shop'
         },
         {
-            label: `hello ${firstName ? firstName : 'Israel'}`,
+            label: `hello ${firstName ? firstName : 'User'}`,
             key: 'simple-user-hello',
             items: [
                 {

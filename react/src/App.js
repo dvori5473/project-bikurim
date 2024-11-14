@@ -28,8 +28,6 @@ function App() {
    <NavBar setVisibleRight={setVisibleRight} visibleRight={visibleRight}/> 
    <Routes>
    <Route path='/'element={<Home/>}></Route>
-  const[toBasket,setToBasket]=useState(false)
-  const[toBasket,setToBasket]=useState(false)
    <Route path='/login'element={<Login setToCheckout={setToCheckout} toCheckout={toCheckout}/>}></Route> 
    <Route path='/product'element={<Products/>}></Route>
     <Route path='/register'element={<Register/>}></Route>
