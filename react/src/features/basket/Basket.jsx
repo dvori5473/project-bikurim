@@ -52,8 +52,8 @@ const Basket = ({ visibleRight, setVisibleRight }) => {
     return (
         <Sidebar visible={visibleRight} position="right" onHide={() => setVisibleRight(false)}>
             {full_basket.length === 0 ? <><img className=" xl:w-15rem  xl:block mx-auto" src={'emptyCart.png'} alt={'emptyCart'} style={{ marginTop: '100px' }} />
-                <h2 style={{ textAlign: 'center' }}>Oops! Your cart is empty,</h2>
-                <Button onClick={() => { setVisibleRight(false); navigate('/product') }} style={{ marginLeft: '75px', color: 'white', backgroundColor: 'transparent', border: 'none' }}>continue shopping</Button>
+                <h2 style={{ textAlign: 'center' }}>oops! Your cart is empty,</h2>
+                <Button onClick={() => { setVisibleRight(false); navigate('/product') }} style={{ marginLeft: '75px', color: 'white', backgroundColor: 'transparent', border: 'none',textDecoration: 'underline' }}>Continue shopping</Button>
             </>
                 :
                 <div>
