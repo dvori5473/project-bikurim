@@ -169,7 +169,7 @@ const FullBasket = ({ setToCheckout }) => {
             <br></br>
             <div style={{ marginTop: '100px',minHeight:'63vh' }}>
                 {basket.products.length === 0 ? <><br></br><img className=" xl:w-15rem  xl:block mx-auto" src={'emptyCart.png'} alt={'emptyCart'} style={{ marginTop: '100px' }} />
-                    <h2 style={{ textAlign: 'center' }}>Oups! Your cart is empty,</h2>
+                    <h2 style={{ textAlign: 'center' }}>oops! Your cart is empty,</h2>
                 </> :
                     <div style={{ marginTop: '100px' }}>
                         <h1 style={{ textAlign: 'center' }} >Basket</h1>
