@@ -16,7 +16,7 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
 
         {
             label: 'חנות',
-            url: '/product',
+            command: () => navigate('/product'),
             key: 'shop'
         },
         {
@@ -43,12 +43,12 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
                 },
                 {
                     label: 'עריכת פרטים אישיים',
-                    url: '/update',
+                    command: () => navigate('/update'),
                     key: 'edit-profile'
                 },
                 {
                     label: 'ההזמנות שלי',
-                    url: `/orders/${_id}`,
+                    command: () => navigate(`/orders/${_id}`),
                     key: 'my-orders'
                 },
             ]
@@ -58,13 +58,13 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
     const adminItems = [
         {
             label: 'משתמשים',
-            url: '/adminUsers',
+            command: () => navigate('/adminUsers'),
             key: 'admin-users'
 
         },
         {
             label: 'מוצרים',
-            url: '/adminProducts',
+            command: () => navigate('/adminProducts'),
             key: 'admin-products' 
         },
         {
@@ -91,7 +91,7 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
                 },
                 {
                     label: 'עריכת פרטים אישיים',
-                    url: '/update',
+                    command: () => navigate('/update'),
                     key: 'edit-profile-admin'
                 },
 
@@ -102,7 +102,7 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
     const simpleUserItems = [
         {
             label: 'חנות',
-            url: '/product',
+            command: () => navigate('/product'),
             key: 'simple-shop'
         },
         {
@@ -111,7 +111,7 @@ export default function NavBar({ visibleRight, setVisibleRight }) {
             items: [
                 {
                     label: 'רישום/התחברות',
-                    url: '/login',
+                    command: () => navigate('/login'),
                     key: 'login'
                 },
             ]
