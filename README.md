@@ -1,5 +1,5 @@
-# Bikurim Bakery Project   https://bikurim.onrender.com
-
+# Bikurim Bakery Project   
+https://bikurim.onrender.com
 ## Project Overview
 
 The Bikurim Bakery project is a full-stack web application designed to facilitate online product purchases with robust user authentication and data security. The project has been successfully deployed ensuring a secure and efficient user experience.
